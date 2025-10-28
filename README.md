@@ -3,10 +3,10 @@ Application code used for the github wiz halftime demo
 
 You will need gulp installed to build this
 
-Once build run:
+Once built run:
 
 ```bash
-npm install -g gulp
+npm install --global gulp-cli
 ```
 
 Then to test built version:
