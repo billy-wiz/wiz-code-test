@@ -1,0 +1,9 @@
+{
+    "wiz.showOnlyPolicyMatches": false,
+    "wiz.codePolicies.vulnerabilities": [
+        "billyyung-vulns-policy-default"
+    ],
+    "wiz.codePolicies.secrets": [
+        "billyyung-secrets-policy-default"
+    ]
+}
