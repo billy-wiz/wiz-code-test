@@ -5,3 +5,4 @@ aws_deploy.sh
 exclude.txt
 githubhalftime.zip
 .git/
+.vscode/
