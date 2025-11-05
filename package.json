@@ -7,7 +7,7 @@
     "start": "node app.js",
     "build": "gulp"
   },
-  "dependencies": {
+"dependencies": {
     "consolidate": "^1.0.3",
     "del": "^7.1.0",
     "express": "4.19.2",
@@ -18,7 +18,8 @@
     "gulp-imagemin": "9.1.0",
     "gulp-uglify": "^3.0.2",
     "mockery": "1.0.1",
-    "mustache": "^4"
+    "mustache": "^4",
+    "tinymce": "4.8.5"
   },
   "devDependencies": {
     "gulp-cli": "^3.1.0"
