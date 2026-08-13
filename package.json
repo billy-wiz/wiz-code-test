@@ -8,6 +8,7 @@
     "build": "gulp"
   },
   "dependencies": {
+    "liquidjs": "10.25.7",
     "mockery": "1.0.1",
     "consolidate": "^1.0.3",
     "express": "4.19.2",
