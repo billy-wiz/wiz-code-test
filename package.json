@@ -8,16 +8,19 @@
     "build": "gulp"
   },
   "dependencies": {
-    "mockery": "1.0.1",
     "consolidate": "^1.0.3",
-    "express": "4.19.2",
-    "mustache": "^4",
     "del": "^7.1.0",
+    "express": "4.19.2",
     "gulp": "^5.0.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-html-replace": "^1.6.2",
+    "gulp-imagemin": "9.1.0",
     "gulp-uglify": "^3.0.2",
-    "gulp-imagemin": "9.1.0"
+    "mockery": "1.0.1",
+    "mustache": "^4"
+  },
+  "devDependencies": {
+    "gulp-cli": "^3.1.0"
   }
 }
