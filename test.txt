@@ -1,1 +1,7 @@
-testing 123
+# Test file for testing purposes
+
+Mock Singapore ID:
+Citizen / PR (Pre-2000): S1234567D
+Citizen / PR (Post-2000): T0123456G
+Foreign Identification (Pre-2000): F1234567N
+Foreign Identification (Post-2000): G1234567X
