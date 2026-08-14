@@ -1,6 +1,7 @@
 name: Build and Push Container Image
 
 on:
+  workflow_dispatch: # Enables manual triggering in GitHub UI
   push:
     branches: [ "main" ]
     # Build & publish tagged releases
