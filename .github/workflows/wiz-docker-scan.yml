@@ -1,8 +1,10 @@
 name: Wiz Security Scan
 
 on:
-  registry_package:
-    types: [published]
+  workflow_run:
+    workflows: ["Build and Push Container Image"]
+    types:
+      - completed
 
 jobs:
   wiz-docker-scan:
