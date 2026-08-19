@@ -1,0 +1,38 @@
+name: Wiz Security Scan
+
+on:
+  registry_package:
+    types: [published]
+
+jobs:
+  wiz-docker-scan:
+    if: github.event.registry_package == 'prime-website'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+
+    steps:
+      - name: Download & Authenticate Wiz CLI
+        env:
+          WIZ_CLIENT_ID: ${{ secrets.WIZ_CLIENT_ID }}
+          WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
+        run: |
+          curl -o wizcli https://wizcli.wiz.io/wizcli
+          chmod +x wizcli
+          ./wizcli auth --id "$WIZ_CLIENT_ID" --secret "$WIZ_CLIENT_SECRET"
+
+      - name: Log into GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull and Scan Published Image
+        env:
+            IMAGE_URL: ghcr.io/${{ github.repository_owner }}/${{ github.event.registry_package.name }}:${{ github.event.registry_package.package_version.container_metadata.tag.name }}
+            WIZ_PROJECT: ${{ vars.WIZ_PROJECT }}
+        run: |
+          echo "Pulling and scanning image: $IMAGE_URL"
+          docker pull "$IMAGE_URL"
+          ./wizcli scan container-image "$IMAGE_URL" --projects="$WIZ_PROJECT"
