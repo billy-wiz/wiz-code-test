@@ -6,7 +6,7 @@ on:
 
 jobs:
   wiz-docker-scan:
-    if: github.event.registry_package == 'prime-website'
+    if: endsWith(github.event.registry_package.name, vars.APP_NAME) 
     runs-on: ubuntu-latest
     permissions:
       packages: read
