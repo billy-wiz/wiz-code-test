@@ -6,10 +6,7 @@ on:
 
 jobs:
   wiz-docker-scan:
-    # Ignore untagged image manifests and only proceed on published app
-    if: |
-      github.event.registry_package.package_version.container_metadata.tag.name != '' &&
-      endsWith(github.event.registry_package.name, vars.APP_NAME)
+    if: endsWith(github.event.registry_package.name, vars.APP_NAME)
     runs-on: ubuntu-latest
     permissions:
       packages: read
