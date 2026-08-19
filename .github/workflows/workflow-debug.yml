@@ -2,8 +2,10 @@ name: workflow debug
 
 # to debug registry_package workflow not triggered on publish
 on:
-  registry_package:
-    types: [published]
+  workflow_run:
+    workflows: ["Build and Push Container Image"]
+    types:
+      - completed
 
 jobs:
   dump-event:
