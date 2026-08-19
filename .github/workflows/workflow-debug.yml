@@ -1,0 +1,20 @@
+name: workflow debug
+
+# to debug registry_package workflow not triggered on publish
+on:
+  registry_package:
+    types: [published]
+
+jobs:
+  dump-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug Logging
+        run: |
+          echo "GITHUB_EVENT_NAME=$GITHUB_EVENT_NAME"
+          echo "GITHUB_EVENT_PATH=$GITHUB_EVENT_PATH"
+          echo "APP_NAME=${{ vars.APP_NAME }}"
+      - name: Show full event payload
+        run: |
+          echo "==== GITHUB EVENT ===="
+          jq . "$GITHUB_EVENT_PATH" || cat "$GITHUB_EVENT_PATH"
