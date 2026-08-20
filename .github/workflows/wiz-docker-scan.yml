@@ -38,10 +38,7 @@ jobs:
             WIZ_PROJECT: ${{ vars.WIZ_PROJECT }}
         run: |
           IMAGE_URL="$IMAGE_REPOSITORY:sha-${IMAGE_SHA:0:7}"
-          echo "Published workflow: ${{ github.event.workflow_run.html_url }}"
-          echo "Source ref: ${{ github.event.workflow_run.head_branch }}"
-          echo "Source commit: $IMAGE_SHA"
-          echo "Scanned image: $IMAGE_URL"
+          echo "Receiving published image version: ${{ github.event.workflow_run.head_branch }}"
           echo "Pulling and scanning image: $IMAGE_URL"
           docker pull "$IMAGE_URL"
           ./wizcli scan container-image "$IMAGE_URL" --projects="$WIZ_PROJECT"
