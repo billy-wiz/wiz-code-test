@@ -1,7 +1,8 @@
 name: workflow debug
 
-# Keep the workflow definition valid while disabling automatic triggers.
-on: {}
+# Manual-only trigger; the workflow will not run automatically.
+on:
+  workflow_dispatch:
 #   workflow_run:
 #     workflows: ["Build and Push Container Image"]
 #     types:
