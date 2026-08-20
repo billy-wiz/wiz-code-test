@@ -1,11 +1,11 @@
 name: workflow debug
 
-# to debug registry_package workflow not triggered on publish
-on:
-  workflow_run:
-    workflows: ["Build and Push Container Image"]
-    types:
-      - completed
+# Keep the workflow definition valid while disabling automatic triggers.
+on: {}
+#   workflow_run:
+#     workflows: ["Build and Push Container Image"]
+#     types:
+#       - completed
 
 jobs:
   dump-event:

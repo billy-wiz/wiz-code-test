@@ -1,14 +1,13 @@
 name: Wiz Security Scan
 
 on:
-  workflow_run:
-    workflows: ["Build and Push Container Image"]
+  registry_package:
     types:
-      - completed
+      - published
 
 jobs:
   wiz-docker-scan:
-    if: endsWith(github.event.registry_package.name, vars.APP_NAME)
+    if: github.event.registry_package.package_type == 'container' && endsWith(github.event.registry_package.name, vars.APP_NAME)
     runs-on: ubuntu-latest
     permissions:
       packages: read
