@@ -1,13 +1,15 @@
 name: Wiz Security Scan
 
 on:
-  registry_package:
+  workflow_run:
+    workflows: ["Build and Push Container Image"]
     types:
-      - published
+      - completed
 
 jobs:
   wiz-docker-scan:
-    if: github.event.registry_package.package_type == 'container' && endsWith(github.event.registry_package.name, vars.APP_NAME)
+    # Only run on the published version-tagged image
+    if: github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.head_branch, 'v')
     runs-on: ubuntu-latest
     permissions:
       packages: read
@@ -18,7 +20,7 @@ jobs:
           WIZ_CLIENT_ID: ${{ secrets.WIZ_CLIENT_ID }}
           WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
         run: |
-          curl -o wizcli https://wizcli.wiz.io/wizcli
+          curl -Lo wizcli https://downloads.wiz.io/v1/wizcli/latest/wizcli-linux-amd64
           chmod +x wizcli
           ./wizcli auth --id "$WIZ_CLIENT_ID" --secret "$WIZ_CLIENT_SECRET"
 
@@ -31,9 +33,15 @@ jobs:
 
       - name: Pull and Scan Published Image
         env:
-            IMAGE_URL: ghcr.io/${{ github.repository_owner }}/${{ github.event.registry_package.name }}:${{ github.event.registry_package.package_version.container_metadata.tag.name }}
+            IMAGE_REPOSITORY: ghcr.io/${{ github.repository_owner }}/${{ vars.APP_NAME }}
+            IMAGE_SHA: ${{ github.event.workflow_run.head_sha }}
             WIZ_PROJECT: ${{ vars.WIZ_PROJECT }}
         run: |
+          IMAGE_URL="$IMAGE_REPOSITORY:sha-${IMAGE_SHA:0:7}"
+          echo "Published workflow: ${{ github.event.workflow_run.html_url }}"
+          echo "Source ref: ${{ github.event.workflow_run.head_branch }}"
+          echo "Source commit: $IMAGE_SHA"
+          echo "Scanned image: $IMAGE_URL"
           echo "Pulling and scanning image: $IMAGE_URL"
           docker pull "$IMAGE_URL"
           ./wizcli scan container-image "$IMAGE_URL" --projects="$WIZ_PROJECT"
